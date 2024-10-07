@@ -1,38 +1,21 @@
-# create-svelte
+## Run
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+```
+pnpm tauri dev
 ```
 
-## Developing
+## How to validate?
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+When you succesfly built, it will open a board, and register two global shortcut
+* `ctrl+cmd+c`: open the board window and make it always on-top (you can close the board window first and use shortcut to open it again)
+* `ctrl+cmd+n`: copy current selection and then delete it
 
-```bash
-npm run dev
+## To reproduce the bug, follow these steps:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+* Type a random word on the board.
+* Select the text you just typed.
+* use shortcut `ctrl+cmd+n` to try to copy it and delete it
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## What is the correct behavior?
+* open apple notes or any editor (not in the tauri board), do the same 
+* You can see that the copied content is the text you just typed.
