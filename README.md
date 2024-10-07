@@ -6,7 +6,7 @@ pnpm tauri dev
 
 ## How to validate?
 
-When you succesfly built, it will open a board, and register two global shortcut
+When you successfully build it, a board will open, and two global shortcuts will be registered.
 * `ctrl+cmd+c`: open the board window and make it always on-top (you can close the board window first and use shortcut to open it again)
 * `ctrl+cmd+n`: copy current selection and then delete it
 
