@@ -15,6 +15,7 @@ When you successfully build it, a board will open, and two global shortcuts will
 * Type a random word on the board.
 * Select the text you just typed.
 * use shortcut `ctrl+cmd+n` to try to copy it and delete it
+* You can see that the copied content is not the text you just typed, and the deletion occurs after the sleep loop (check the log in the terminal).
 
 ## What is the correct behavior?
 * open apple notes or any editor (not in the tauri board), do the same 
