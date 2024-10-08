@@ -3,6 +3,8 @@
 
 extern crate core;
 use enigo::{Direction, Enigo, Key, Keyboard};
+use get_selected_text::get_selected_text;
+
 use std::{
     sync::{Arc, Mutex},
     thread,
@@ -49,7 +51,7 @@ fn main() {
                 .unwrap();
 
             app.global_shortcut_manager()
-                .register("Command+ctrl+n", move || {
+                .register("Command+ctrl+,", move || {
                     get_context(app_handle_clone.clone());
                 })
                 .unwrap();
@@ -83,54 +85,24 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-fn handle_selection() {
-    let mut enigo = Enigo::new(&enigo::Settings::default()).unwrap();
-    #[cfg(target_os = "macos")]
-    {
-        enigo.key(Key::Meta, Direction::Release).unwrap();
-        // copy
-        enigo.key(Key::Meta, Direction::Press).unwrap();
-        // enigo.key(Key::Unicode('c'), Direction::Click).unwrap();
-        enigo.raw(8, Direction::Click).unwrap();
-        enigo.key(Key::Meta, Direction::Release).unwrap();
+fn handle_selection() -> String {
+    let mut selected_text = String::new();
+    match get_selected_text() {
+        Ok(text) => {
+            selected_text = text;
+        }
+        Err(_) => {
+            println!("error occurred while getting the selected text");
+        }
     }
 
-    #[cfg(not(target_os = "macos"))]
-    {
-        // For Windows and Linux, use Ctrl key
-        enigo.key(Key::LControl, Direction::Press).unwrap();
-        enigo.key(Key::Unicode('c'), Direction::Click).unwrap();
-        enigo.key(Key::LControl, Direction::Release).unwrap();
-    }
-
-    enigo.key(Key::Backspace, Direction::Click).unwrap();
+    selected_text
 }
 
 fn get_context(app_handle: Arc<Mutex<Option<AppHandle>>>) {
     println!("preparing to copy text...");
 
-    handle_selection();
-    for _ in 0..3 {
-        println!("waiting for 5 seconds");
-        std::thread::sleep(std::time::Duration::from_secs(1));
-    }
-
-    println!("----------> finished handle_selection");
-    let user_prompt = {
-        let mut handle = app_handle.lock().unwrap();
-        handle
-            .as_mut()
-            .unwrap()
-            .clipboard_manager()
-            .clipboard
-            .lock()
-            .unwrap()
-            .as_mut()
-            .unwrap()
-            .get_text()
-            .unwrap_or("".to_string())
-    };
-
+    let user_prompt = handle_selection();
     println!("----------> finished getting user_prompt");
     println!("copied... {}", user_prompt);
 }
