@@ -110,10 +110,6 @@ fn get_context(app_handle: Arc<Mutex<Option<AppHandle>>>) {
     println!("preparing to copy text...");
 
     handle_selection();
-    for _ in 0..3 {
-        println!("waiting for 5 seconds");
-        std::thread::sleep(std::time::Duration::from_secs(1));
-    }
 
     println!("----------> finished handle_selection");
     let user_prompt = {
