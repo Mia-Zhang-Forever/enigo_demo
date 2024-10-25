@@ -39,7 +39,7 @@ fn main() {
 
             let app_handle = app.handle();
             app.global_shortcut_manager()
-                .register("Command+ctrl+c", move || {
+                .register("alt+ctrl+c", move || {
                     if let Some(window) = app_handle.get_window("board") {
                         window.set_always_on_top(true).unwrap();
                         window.set_focus().unwrap();
@@ -49,7 +49,7 @@ fn main() {
                 .unwrap();
 
             app.global_shortcut_manager()
-                .register("Command+ctrl+n", move || {
+                .register("alt+ctrl+n", move || {
                     get_context(app_handle_clone.clone());
                 })
                 .unwrap();
